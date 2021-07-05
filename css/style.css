@@ -101,3 +101,8 @@
 .post-text {
     margin: 15px 0;
 }
+
+.close {
+    flex-grow: 1;
+    text-align: right;
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,6 +15,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
+
 <body>
 
     <div id="profile-page">
@@ -24,13 +26,13 @@
         </div>
 
         <div class="new-post">
-            <textarea placeholder="A cosa stai pensando?"></textarea>
-            <button class="send">CREA</button>
+            <textarea v-model="newPost" placeholder="A cosa stai pensando?"></textarea>
+            <button @click="pushIn" class="send">CREA</button>
         </div>
 
         <div class="post-list">
 
-            <div v-for = 'post in myProfile.posts' class="post">
+            <div v-for='(post, index) in myProfile.posts' class="post">
                 <div class="post-details">
                     <div class="user-pic">
                         <img :src="myProfile.details.pic" alt="user pic">
@@ -39,13 +41,16 @@
                         <div class="user-name">{{myProfile.details.name}} {{myProfile.details.surname}}</div>
                         <div class="post-date">{{post.date}}</div>
                     </div>
-                </div> 
+                    <div @click="deThis(index)" class="close">
+                        X
+                    </div>
+                </div>
                 <div class="post-text">
                     {{post.text}}
                 </div>
 
                 <!-- if? -->
-                <div v-if = "Object.keys(post).includes('mediaPath')" class="post-media">
+                <div v-if="Object.keys(post).includes('mediaPath')" class="post-media">
                     <img :src='post.mediaPath' alt="media" />
                 </div>
 
@@ -56,4 +61,5 @@
     </div>
     <script src="./js/script-vue.js"></script>
 </body>
+
 </html>
