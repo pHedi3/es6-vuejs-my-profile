@@ -12,7 +12,7 @@ const stampFunction = () => {
     <div class="user-name">${data.myProfile.details.name} ${data.myProfile.details.surname}</div>
     <div class="post-date">${post.date}</div>
     </div>
-    <div value="${index}" class="close">
+    <div class="close ${index}">
     X
     </div>
     </div> 
@@ -84,9 +84,13 @@ document.querySelector('.new-post .send').addEventListener('click', () => {
     stampFunction()
 })
 
-document.querySelector('.post-details .close').addEventListener('click', event => {
-    console.log(event.value)
-})
-
+for (var x = 0; x < data.myProfile.posts.length; x++) {
+    document.getElementsByClassName('close')[x].addEventListener('click', (event) => {
+        let curIndex = event.currentTarget.className
+        let num = curIndex[curIndex.length - 1]
+        data.myProfile.posts.splice(num, 1)
+        stampFunction()
+    })
+}
 
 
