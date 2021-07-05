@@ -35,13 +35,22 @@ userDetailHtml.innerHTML = `
 `
 
 // in vuejs sarà: {{ myProfile.details.name }}
+document.querySelector('.new-post .send').addEventListener('click', () => {
+    const newText = document.querySelector('.new-post textarea').value
+    data.myProfile.posts.push({
+        text: newText,
+        date: '05-07-2021'
+    })
+    stampFunction()
+})
 
-var postListHtml = document.querySelector(".post-list")
 
-data.myProfile.posts.forEach((post) => {
-
-    // prepariamo la parte interna dell'elemento html .post
-    let postHtml = `
+const stampFunction = () => {
+    var postListHtml = document.querySelector(".post-list")
+    postListHtml.innerHTML = ""
+    data.myProfile.posts.forEach((post) => {
+        // prepariamo la parte interna dell'elemento html .post
+        let postHtml = `
     <div class="post-details"> 
         <div class="user-pic">
             <img src="${data.myProfile.details.pic}" alt="user pic">
@@ -54,19 +63,23 @@ data.myProfile.posts.forEach((post) => {
     <div class="post-text">
         ${post.text}
     </div>
-` 
-    // solo se l'immagine esiste aggiungere a postHtml l'html del media
-    // mediaPath è una chiave che "a volte" esiste. <= verifichiamo che esista.
-    // usiamo Object.keys(post) per ottenere tutte le chiavi di un oggetto => è una lista/array
-    if (Object.keys(post).includes('mediaPath')) {
-        postHtml += ` <div class="post-media">
+`
+        // solo se l'immagine esiste aggiungere a postHtml l'html del media
+        // mediaPath è una chiave che "a volte" esiste. <= verifichiamo che esista.
+        // usiamo Object.keys(post) per ottenere tutte le chiavi di un oggetto => è una lista/array
+        if (Object.keys(post).includes('mediaPath')) {
+            postHtml += ` <div class="post-media">
         <img src="${post.mediaPath}" alt="media" />
         </div>`
-    }
+        }
 
-    // adesso il nostro html preparato è il postHtml.
-    // dobbiamo inserirlo nel suo container <div class="post"></div>
-    // e il tutto dentro postListHtml.innerHtml.
+        // adesso il nostro html preparato è il postHtml.
+        // dobbiamo inserirlo nel suo container <div class="post"></div>
+        // e il tutto dentro postListHtml.innerHtml.
 
-    postListHtml.innerHTML += `<div class="post"> ${postHtml} </div>`
-}) 
+        postListHtml.innerHTML += `<div class="post"> ${postHtml} </div>`
+    })
+
+}
+
+stampFunction()
